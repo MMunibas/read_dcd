@@ -29,7 +29,7 @@ private:
     // private attributes
     std::fstream dcdf;  // for opening dcd file
     
-    bool dcd_first_read;
+    bool dcd_first_read; // at first read of the coordinates if there are some frozen atoms the number of coordinates to read is different than for other frames
     
     char HDR[4+1]; // is CORD if only coordinates or VEL if velocities included (not supported yet)
     int  ICNTRL[20];
@@ -55,7 +55,7 @@ private:
     int LNFREAT; // Number of free (moving) atoms.
     int *FREEAT; // Array storing indexes of moving atoms.
     
-    //coordinates stored in simple precision
+    //coordinates stored in simple precision (IMPORTANT)
     float *X;
     float *Y;
     float *Z;

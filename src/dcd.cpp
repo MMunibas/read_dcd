@@ -36,12 +36,15 @@ void DCD::read_header()
 {
     unsigned int fortcheck1,fortcheck2;
     
-    dcdf.read((char*)&fortcheck1,sizeof(unsigned int));
-    dcdf.read((char*)HDR,sizeof(char)*4);
-    dcdf.read((char*)ICNTRL,sizeof(int)*20);
-    dcdf.read((char*)&fortcheck2,sizeof(unsigned int));
-    checkFortranIOerror(__FILE__,__LINE__,fortcheck1,fortcheck2);
+    //This is the trick for reading binary data from fortran file : see the method DCD::checkFortranIOerror for more details.
+    //we are reading data corresponding to a "write(...) HDR,ICNTRL" fortran statement
+    dcdf.read((char*)&fortcheck1,sizeof(unsigned int));         //consistency check 1
+    dcdf.read((char*)HDR,sizeof(char)*4);                       //first data block written by fortran  : a character array of length 4.
+    dcdf.read((char*)ICNTRL,sizeof(int)*20);                    //second data block written by fortran : an integer(4) array of length 20.
+    dcdf.read((char*)&fortcheck2,sizeof(unsigned int));         //consistency check 2
+    checkFortranIOerror(__FILE__,__LINE__,fortcheck1,fortcheck2);// if the 2 unsigned ints have a different value there was an error
 
+    /* See dcd.hpp for details on ICNTRL */
     HDR[4]='\0';
     NFILE = ICNTRL[0];
     NPRIV = ICNTRL[1];
@@ -53,6 +56,7 @@ void DCD::read_header()
     QCRYS = ICNTRL[10];
     CHARMV= ICNTRL[19];
     
+    /* Several "lines" of title of length 80 are written to the dcd file by CHARMM */
     dcdf.read((char*)&fortcheck1,sizeof(unsigned int));
     dcdf.read((char*)&NTITLE,sizeof(int));
     if(NTITLE==0)
@@ -72,11 +76,16 @@ void DCD::read_header()
     dcdf.read((char*)&fortcheck2,sizeof(unsigned int));
     checkFortranIOerror(__FILE__,__LINE__,fortcheck1,fortcheck2);
     
+    // reading number of atoms
     dcdf.read((char*)&fortcheck1,sizeof(unsigned int));
     dcdf.read((char*)&NATOM,sizeof(int));
     dcdf.read((char*)&fortcheck2,sizeof(unsigned int));
     checkFortranIOerror(__FILE__,__LINE__,fortcheck1,fortcheck2);
     
+    /* If some atoms of the MD or MC simulation are frozen (i.e. never moving ) it is useless to store their coordinates more than once.
+     * In that case a list of Free atoms (moving ones) is written at the end of the header part of the dcd.
+     * See DCD::read_oneFrame() for more details.
+     */
     LNFREAT = NATOM - FROZAT;
     if (LNFREAT != NATOM)
     {
@@ -87,6 +96,7 @@ void DCD::read_header()
         checkFortranIOerror(__FILE__,__LINE__,fortcheck1,fortcheck2);
     }
     
+    //allocate memory for storing coordinates (only one frame of the dcd is stored, so several (NFILE) calls to DCD::read_oneFrame() are necessary for reading the whole file).
     alloc_crd();
 }
 
@@ -166,6 +176,25 @@ void DCD::read_oneFrame()
     delete[] tmpZ;
 }
 
+/*
+ * When writing a block of binary data to a file, Fortran adds 2 unsigned integer before and after the block : each one contains the total number of bytes of the block.
+ * 
+ * For example for a fortran array of real(8) of size 10, 80 bytes of a data have to be written : so 3 things are written to the binary file : 
+ *  1) An unsigned integer (4 bytes) , its value is 80
+ *  2) The fortran array (80 bytes)
+ *  3) A second unsigned integer (4 bytes), same value of 80.
+ * This corresponds to the fortran statement "write(file_descriptor) fortran_array"
+ * 
+ * Now when writing several things at the same tine, i.e. "write(file_descriptor) fortran_array,an_integer"
+ * things are written as following:
+ * 1) unsigned int size
+ * 2) fortran array
+ * 3) an_integer
+ * 4) unsigned int size
+ * The value of the 2 unsigned ints is 84 : 80 for the array, 4 for the integer(4).
+ * 
+ * The following method DCD::checkFortranIOerror check that the 2 unsigned ints have the same value: if not there was a probem when reading the binary fortran file.
+ */
 void DCD::checkFortranIOerror(const char file[], const int line, const unsigned int fortcheck1, const unsigned int fortcheck2)
 {
     if( fortcheck1 != fortcheck2 )
