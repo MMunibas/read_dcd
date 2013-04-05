@@ -19,24 +19,33 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "dcd.hpp"
+#include "dcd_r.hpp"
 
 using namespace std;
 
 int main() {
 
-    // instance of a new object DCD attached to a dcd file
-    DCD dcdFile("dyna.dcd");
+    // instance of a new object DCD_R attached to a dcd file 
+    DCD_R dcdFile("dyna.dcd");
     
     // read the header and print it
     dcdFile.read_header();
     dcdFile.printHeader();
     
+    const float *x,*y,*z;
+    
     // in this loop the coordinates are read frame by frame
     for(int i=0;i<dcdFile.getNFILE();i++)
     {
         dcdFile.read_oneFrame();
+        
         /* your code goes here */
+        
+        x=dcdFile.getX();
+        y=dcdFile.getX();
+        z=dcdFile.getX();
+        /* ... */
+        
     }
     
     return EXIT_SUCCESS;

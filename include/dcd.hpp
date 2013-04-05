@@ -23,10 +23,8 @@
 
 class DCD
 {
-
-private:
-
-    // private attributes
+protected:
+    //protected attributes
     std::fstream dcdf;  // for opening dcd file
     
     bool dcd_first_read; // at first read of the coordinates if there are some frozen atoms the number of coordinates to read is different than for other frames
@@ -60,44 +58,13 @@ private:
     float *Y;
     float *Z;
     
-    // private methods
-    void alloc_crd();
-    
+    //protected methods
+    virtual void alloc_crd() = 0;
+    void checkFortranIOerror(const char file[], const int line, 
+                             const unsigned int fortcheck1, const unsigned int fortcheck2);
 public:
-    
-    // no public attributes
-    
-    // public methods
-    DCD(const char filename[]); //constructor
-    
-    void read_header();
-    void read_oneFrame();
-    void printHeader();
-    void checkFortranIOerror(const char file[], const int line, const unsigned int fortcheck1, const unsigned int fortcheck2);
-    
-    int getNFILE() const;
-    const float* getZ() const;
-    const float* getY() const;
-    const float* getX() const;
-    const int* getFREEAT() const;
-    int getLNFREAT() const;
-    int getNATOM() const;
-    int getCHARMV() const;
-    int getQCRYS() const;
-    int getDELTA4() const;
-    int getFROZAT() const;
-    int getNDEGF() const;
-    int getNSTEP() const;
-    int getNSAVC() const;
-    int getNPRIV() const;
-    const double* getPbc() const;
-    const char* getTITLE() const;
-    int getNTITLE() const;
-    const int* getICNTRL() const;
-    const char* getHDR() const;
-        
+    DCD();
     ~DCD();
-
 };
 
 #endif // DCD_HPP_INCLUDED
