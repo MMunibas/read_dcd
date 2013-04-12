@@ -46,7 +46,7 @@ DCD::DCD()
  * 
  * The following method DCD::checkFortranIOerror check that the 2 unsigned ints have the same value: if not there was a probem when reading the binary fortran file.
  */
-void DCD::checkFortranIOerror(const char file[], const int line, const unsigned int fortcheck1, const unsigned int fortcheck2)
+void DCD::checkFortranIOerror(const char file[], const int line, const unsigned int fortcheck1, const unsigned int fortcheck2) const
 {
     if( fortcheck1 != fortcheck2 )
     {
@@ -55,6 +55,87 @@ void DCD::checkFortranIOerror(const char file[], const int line, const unsigned 
         cout << "in File " << file << " at Line " << line << endl;
         exit(EXIT_FAILURE);
     }
+}
+
+
+int DCD::getNFILE() const {
+    return NFILE;
+}
+
+const float* DCD::getZ() const {
+    return Z;
+}
+
+const float* DCD::getY() const {
+    return Y;
+}
+
+const float* DCD::getX() const {
+    return X;
+}
+
+const int* DCD::getFREEAT() const {
+    return FREEAT;
+}
+
+int DCD::getLNFREAT() const {
+    return LNFREAT;
+}
+
+int DCD::getNATOM() const {
+    return NATOM;
+}
+
+int DCD::getCHARMV() const {
+    return CHARMV;
+}
+
+int DCD::getQCRYS() const {
+    return QCRYS;
+}
+
+int DCD::getDELTA4() const {
+    return DELTA4;
+}
+
+int DCD::getFROZAT() const {
+    return FROZAT;
+}
+
+int DCD::getNDEGF() const {
+    return NDEGF;
+}
+
+int DCD::getNSTEP() const {
+    return NSTEP;
+}
+
+int DCD::getNSAVC() const {
+    return NSAVC;
+}
+
+int DCD::getNPRIV() const {
+    return NPRIV;
+}
+
+const double* DCD::getPbc() const {
+    return pbc;
+}
+
+const char* DCD::getTITLE() const {
+    return TITLE;
+}
+
+int DCD::getNTITLE() const {
+    return NTITLE;
+}
+
+const int* DCD::getICNTRL() const {
+    return ICNTRL;
+}
+
+const char* DCD::getHDR() const {
+    return HDR;
 }
 
 DCD::~DCD()

@@ -32,7 +32,7 @@ DCD_R::DCD_R(const char filename[])
     dcd_first_read=true;
 }
 
-void DCD_R::alloc_crd()
+void DCD_R::alloc()
 {
     X=new float[NATOM];
     Y=new float[NATOM];
@@ -105,7 +105,7 @@ void DCD_R::read_header()
     }
     
     //allocate memory for storing coordinates (only one frame of the dcd is stored, so several (NFILE) calls to DCD_R::read_oneFrame() are necessary for reading the whole file).
-    alloc_crd();
+    alloc();
 }
 
 void DCD_R::read_oneFrame()
@@ -177,7 +177,7 @@ void DCD_R::read_oneFrame()
     delete[] tmpZ;
 }
 
-void DCD_R::printHeader()
+void DCD_R::printHeader() const
 {
     int i;
     
@@ -195,87 +195,6 @@ void DCD_R::printHeader()
     cout << "LNFREAT :\t" << LNFREAT << endl;
     
 }
-
-int DCD_R::getNFILE() const {
-    return NFILE;
-}
-
-const float* DCD_R::getZ() const {
-    return Z;
-}
-
-const float* DCD_R::getY() const {
-    return Y;
-}
-
-const float* DCD_R::getX() const {
-    return X;
-}
-
-const int* DCD_R::getFREEAT() const {
-    return FREEAT;
-}
-
-int DCD_R::getLNFREAT() const {
-    return LNFREAT;
-}
-
-int DCD_R::getNATOM() const {
-    return NATOM;
-}
-
-int DCD_R::getCHARMV() const {
-    return CHARMV;
-}
-
-int DCD_R::getQCRYS() const {
-    return QCRYS;
-}
-
-int DCD_R::getDELTA4() const {
-    return DELTA4;
-}
-
-int DCD_R::getFROZAT() const {
-    return FROZAT;
-}
-
-int DCD_R::getNDEGF() const {
-    return NDEGF;
-}
-
-int DCD_R::getNSTEP() const {
-    return NSTEP;
-}
-
-int DCD_R::getNSAVC() const {
-    return NSAVC;
-}
-
-int DCD_R::getNPRIV() const {
-    return NPRIV;
-}
-
-const double* DCD_R::getPbc() const {
-    return pbc;
-}
-
-const char* DCD_R::getTITLE() const {
-    return TITLE;
-}
-
-int DCD_R::getNTITLE() const {
-    return NTITLE;
-}
-
-const int* DCD_R::getICNTRL() const {
-    return ICNTRL;
-}
-
-const char* DCD_R::getHDR() const {
-    return HDR;
-}
-
 
 DCD_R::~DCD_R()
 {

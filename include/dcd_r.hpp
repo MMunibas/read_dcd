@@ -27,7 +27,7 @@ class DCD_R : public DCD
 private:
     //no private attributes
     //private methods
-    void alloc_crd();
+    void alloc();
     
 public:
     
@@ -37,28 +37,7 @@ public:
     
     void read_header();
     void read_oneFrame();
-    void printHeader();
-    
-    int getNFILE() const;
-    const float* getZ() const;
-    const float* getY() const;
-    const float* getX() const;
-    const int* getFREEAT() const;
-    int getLNFREAT() const;
-    int getNATOM() const;
-    int getCHARMV() const;
-    int getQCRYS() const;
-    int getDELTA4() const;
-    int getFROZAT() const;
-    int getNDEGF() const;
-    int getNSTEP() const;
-    int getNSAVC() const;
-    int getNPRIV() const;
-    const double* getPbc() const;
-    const char* getTITLE() const;
-    int getNTITLE() const;
-    const int* getICNTRL() const;
-    const char* getHDR() const;
+    void printHeader() const;
         
     ~DCD_R();
 

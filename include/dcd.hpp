@@ -59,12 +59,34 @@ protected:
     float *Z;
     
     //protected methods
-    virtual void alloc_crd() = 0;
+    virtual void alloc()=0;
     void checkFortranIOerror(const char file[], const int line, 
-                             const unsigned int fortcheck1, const unsigned int fortcheck2);
+                             const unsigned int fortcheck1, const unsigned int fortcheck2) const;
 public:
     DCD();
-    ~DCD();
+    
+    int getNFILE() const;
+    const float* getZ() const;
+    const float* getY() const;
+    const float* getX() const;
+    const int* getFREEAT() const;
+    int getLNFREAT() const;
+    int getNATOM() const;
+    int getCHARMV() const;
+    int getQCRYS() const;
+    int getDELTA4() const;
+    int getFROZAT() const;
+    int getNDEGF() const;
+    int getNSTEP() const;
+    int getNSAVC() const;
+    int getNPRIV() const;
+    const double* getPbc() const;
+    const char* getTITLE() const;
+    int getNTITLE() const;
+    const int* getICNTRL() const;
+    const char* getHDR() const;
+    
+    virtual ~DCD();
 };
 
 #endif // DCD_HPP_INCLUDED
