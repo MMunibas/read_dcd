@@ -28,7 +28,18 @@ using namespace std;
 
 DCD_R::DCD_R(const char filename[])
 {
-    dcdf.open(filename,ios::in|ios::binary);
+    
+    dcdf.exceptions(std::ifstream::failbit);
+    try
+    {
+        dcdf.open(filename,ios::in|ios::binary);
+    }
+    catch(std::ifstream::failure e)
+    {
+        cerr << "Exception opening/reading file '" << filename << "' : " << std::endl;
+        cerr << "Please chech the path of the file and if it exists." << endl;
+    } 
+    
     dcd_first_read=true;
 }
 
