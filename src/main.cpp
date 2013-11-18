@@ -19,12 +19,27 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "array_tools.hpp"
+
 #include "dcd_r.hpp"
 
 using namespace std;
 
-int main() {
-
+int main(int argc, char* argv[])
+{
+//     ARRAY_3D<int> a(2,2,2);konnen
+//     
+//     int t=0;
+//     for(int i=0; i<2; i++)
+//         for(int j=0; j<2; j++)
+//             for(int k=0; k<2; k++)
+//                 a(i,j,k) = t++;
+//             
+//     for(int i=0; i<2; i++)
+//         for(int j=0; j<2; j++)
+//             for(int k=0; k<2; k++)
+//                 std::cout << a(i,j,k) << std::endl;
+                
     // instance of a new object DCD_R attached to a dcd file 
     DCD_R dcdf("dyna.dcd");
     
@@ -42,8 +57,9 @@ int main() {
         /* your code goes here */
         
         x=dcdf.getX();
-        y=dcdf.getX();
-        z=dcdf.getX();
+        y=dcdf.getY();
+        z=dcdf.getZ();
+        
         /* ... */
         
     }

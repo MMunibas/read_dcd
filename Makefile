@@ -4,7 +4,7 @@
 
 CC=g++
 
-CC_OPT=-I"./include" -Wall -Wextra -O2
+CC_OPT= -std=c++11 -I"./include" -Wall -Wextra -O2
 
 LD_LIB=
 
