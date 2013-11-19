@@ -35,9 +35,9 @@ public:
     // public methods
     DCD_R(const char filename[]); //constructor
     
-    void read_header();
-    void read_oneFrame();
-    void printHeader() const;
+    virtual void read_header();
+    virtual void read_oneFrame();
+    virtual void printHeader() const;
         
     ~DCD_R();
 

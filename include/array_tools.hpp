@@ -36,7 +36,6 @@ private:
 public:
     ARRAY_3D(unsigned int _d1, unsigned int _d2, unsigned int _d3) : d1(_d1), d2(_d2), d3(_d3)
     {
-//         T = nullptr;
         siz = d1*d2*d3;
         
         try
@@ -107,7 +106,6 @@ private:
 public:
     ARRAY_2D(unsigned int _d1, unsigned int _d2) : d1(_d1), d2(_d2)
     {
-//         T = nullptr;
         siz = d1*d2;
         
         try

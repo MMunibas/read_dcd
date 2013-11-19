@@ -87,6 +87,10 @@ public:
     const char* getHDR() const;
     
     virtual ~DCD();
+    
+    virtual void read_header()=0;
+    virtual void read_oneFrame()=0;
+    virtual void printHeader()const=0;
 };
 
 #endif // DCD_HPP_INCLUDED

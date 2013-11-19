@@ -27,29 +27,60 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {                
+    if (argc != 5 )
+    {
+        std::cout << "Need 5 arguments : 'dcd_name a b c' where a b c are the PBC parameters." << std::endl;
+        return EXIT_FAILURE;
+    }
+    
     // instance of a new object DCD_R attached to a dcd file 
-    DCD_R dcdf("dyna.dcd");
+    DCD* dcdf = new DCD_R(argv[1]);
     
     // read the header and print it
-    dcdf.read_header();
-    dcdf.printHeader();
+    dcdf->read_header();
+    dcdf->printHeader();
     
-    const float *x,*y,*z;
+    unsigned int dim = 32;
+    double a = strtod(argv[2],nullptr);
+    double b = strtod(argv[3],nullptr);
+    double c = strtod(argv[4],nullptr);
     
+    double da,db,dc;
+    da = a/(double)dim;
+    db = b/(double)dim;
+    dc = c/(double)dim;
+    
+    double damin,damax,dbmin,dbmax,dcmin,dcmax;
+    damin = -a/2;
+    damax = a/2;
+    dbmin = -b/2;
+    dbmax = b/2;
+    dcmin = -c/2;
+    dcmax = c/2;
+    
+
+    
+    ARRAY_3D<double> dens(dim,dim,dim); //allocate the array
+    
+    const float *x=nullptr, *y=nullptr, *z=nullptr;
     // in this loop the coordinates are read frame by frame
-    for(int i=0;i<dcdf.getNFILE();i++)
+    for(int i=0; i<dcdf->getNFILE(); i++)
     {
-        dcdf.read_oneFrame();
+        dcdf->read_oneFrame();
         
         /* your code goes here */
         
-        x=dcdf.getX();
-        y=dcdf.getY();
-        z=dcdf.getZ();
+        x = dcdf->getX();
+        y = dcdf->getY();
+        z = dcdf->getZ();
         
         /* ... */
+
+        
         
     }
+    
+    delete dcdf;
     
     return EXIT_SUCCESS;
 }
