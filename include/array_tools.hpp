@@ -20,6 +20,7 @@
 #define ARRAYS_HPP_INCLUDED
 
 #include <iostream>
+#include <fstream>
 #include <exception>
 
 template <typename T> 
@@ -72,6 +73,12 @@ public:
     {
         for (unsigned int i = 0; i < siz; i++)
             std::cout << "Dump of value at rank "<< i << " : " << ptr[i] << std::endl;
+    }
+    
+    void toFile_ascii(std::fstream& out)
+    {
+        for (unsigned int i = 0; i < siz; i++)
+            out << ptr[i] << " ";
     }
     
     T sum()
@@ -142,6 +149,12 @@ public:
     {
         for (unsigned int i = 0; i < siz; i++)
             std::cout << "Dump of value at rank "<< i << " : " << ptr[i] << std::endl;
+    }
+    
+    void toFile_ascii(std::fstream& out)
+    {
+        for (unsigned int i = 0; i < siz; i++)
+            out << ptr[i] << " ";
     }
     
     T sum()

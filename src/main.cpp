@@ -18,6 +18,9 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+
+#include <cmath>
 
 #include "array_tools.hpp"
 
@@ -57,9 +60,7 @@ int main(int argc, char* argv[])
     dbmax = b/2;
     dcmin = -c/2;
     dcmax = c/2;
-    
 
-    
     ARRAY_3D<double> dens(dim,dim,dim); //allocate the array
     
     const float *x=nullptr, *y=nullptr, *z=nullptr;
@@ -76,9 +77,21 @@ int main(int argc, char* argv[])
         
         /* ... */
 
+        unsigned int lx, ly, lz;
+        lx = (unsigned int) ceil( (x[0]-damin)/da );
+        ly = (unsigned int) ceil( (y[0]-dbmin)/db );
+        lz = (unsigned int) ceil( (z[0]-dcmin)/dc );
         
+//         std::cout << "lx ly lz : \t" << lx << '\t' << ly << '\t'<< lz << '\t' << std::endl;
         
+        dens(lx,ly,lz) += 1.0;
     }
+    
+//     dens.dump();
+
+    std::fstream ascii("dens.dat",ios::out);
+    dens.toFile_ascii(ascii);
+    ascii.close();
     
     delete dcdf;
     
