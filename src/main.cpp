@@ -17,13 +17,12 @@
  */
 
 #include <cstdlib>
+#include <cmath>
+
 #include <iostream>
 #include <fstream>
 
-#include <cmath>
-
 #include "array_tools.hpp"
-
 #include "dcd_r.hpp"
 
 using namespace std;
@@ -53,13 +52,14 @@ int main(int argc, char* argv[])
     db = b/(double)dim;
     dc = c/(double)dim;
     
-    double damin,damax,dbmin,dbmax,dcmin,dcmax;
+    double damin,dbmin,dcmin;
     damin = -a/2;
-    damax = a/2;
     dbmin = -b/2;
-    dbmax = b/2;
     dcmin = -c/2;
-    dcmax = c/2;
+//     double damax,dbmax,dcmax;
+//     damax = a/2;
+//     dbmax = b/2;
+//     dcmax = c/2;
 
     ARRAY_3D<double> dens(dim,dim,dim); //allocate the array
     
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 //     dens.dump();
 
     std::fstream ascii("dens.dat",ios::out);
-    dens.toFile_ascii(ascii);
+    dens.toFile_ascii_sparse(ascii);
     ascii.close();
     
     delete dcdf;

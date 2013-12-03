@@ -21,7 +21,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <exception>
 
 template <typename T> 
 class ARRAY_3D
@@ -79,6 +78,17 @@ public:
     {
         for (unsigned int i = 0; i < siz; i++)
             out << ptr[i] << " ";
+    }
+    
+    void toFile_ascii_sparse(std::fstream& out)
+    {
+        for (unsigned int i = 0; i < d1; i++)
+            for (unsigned int j = 0; j < d2; j++)
+                for (unsigned int k = 0; k < d3; k++)
+                {
+                    if (this->operator()(i,j,k)!=(T)0.0)
+                        out << i << '\t' << j << '\t' << k << '\t' << this->operator()(i,j,k) << std::endl;
+                }
     }
     
     T sum()
@@ -155,6 +165,16 @@ public:
     {
         for (unsigned int i = 0; i < siz; i++)
             out << ptr[i] << " ";
+    }
+    
+    void toFile_ascii_sparse(std::fstream& out)
+    {
+        for (unsigned int i = 0; i < d1; i++)
+            for (unsigned int j = 0; j < d2; j++)
+                {
+                    if (this->operator()(i,j)!=(T)0.0)
+                        out << i << '\t' << j << '\t' << this->operator()(i,j) << std::endl;
+                }
     }
     
     T sum()
