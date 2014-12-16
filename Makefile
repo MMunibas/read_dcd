@@ -2,9 +2,9 @@
 ########################   MakeVars   ###########################
 #################################################################
 
-CC=g++
+#CXX=g++
 
-CC_OPT= -std=c++11 -I"./include" -Wall -Wextra -O2
+CXX_OPT= -std=c++0x -I "./include" -Wall -Wextra -O2
 
 LD_LIB=
 
@@ -12,7 +12,7 @@ LD_OPT=
 
 MKDIR=mkdir -p ./obj
 
-CIBLE=read_dcd
+TARGET=read_dcd
 
 SRC=$(wildcard ./src/*.cpp)
 
@@ -22,17 +22,17 @@ OBJ=$(patsubst ./src/%.cpp,./obj/%.o,$(SRC))
 ########################   Makefile   ###########################
 #################################################################
 
-all:$(CIBLE)
+all:$(TARGET)
 	@echo "Compilation Success"
 
-$(CIBLE):Makefile
+$(TARGET):Makefile
 
 ./obj/%.o:./src/%.cpp
 	@$(MKDIR)
-	$(CC) $(CC_OPT) -c $< -o $@
+	$(CXX) $(CXX_OPT) -c $< -o $@
 
-$(CIBLE):$(OBJ)
-	$(CC) $(CC_OPT) $(LD_LIB) $(OBJ) -o $@ $(LD_OPT)
+$(TARGET):$(OBJ)
+	$(CXX) $(CXX_OPT) $(LD_LIB) $(OBJ) -o $@ $(LD_OPT)
 
 clean:
-	rm -f $(CIBLE) ./obj/*.o
+	rm -f $(TARGET) ./obj/*.o
