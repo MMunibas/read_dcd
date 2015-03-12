@@ -1,6 +1,19 @@
+env:
+  global:
+    - secure: "TY0FjqrdxWZO5V4MG8fyKJsPEnSKfXx2oaCJWqn4yGlPVyITF0ebhS9EjQMJiF1KPziJuv7EG1BXkKvtRqkhWUAAMhG+2FmM+coIYeF7mDIuDMvsuycDYysCMZ485cH5cxpXIRKENZZqYBFMu1msfFvBPQPxxl9pDrR8Q+SP+dY="
+
 language: cpp
 compiler:
   - gcc
   - clang
+
+addons:
+  coverity_scan:
+    project:
+      name: "FHedin/read_dcd"
+      description: "Build submitted via Travis CI"
+    notification_email: hedin.florent@gmail.com
+    build_command:   "make -j 4"
+    branch_pattern: master
 # Change this to your needs
-script: make
+script: make -j 4
