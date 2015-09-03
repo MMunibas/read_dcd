@@ -1,6 +1,6 @@
 /*
- *  read_dcd : c++ class + main file example for reading a CHARMM dcd file
- *  Copyright (C) 2013  Florent Hedin
+ *  read_dcd : c++ class for reading a CHARMM dcd file
+ *  Copyright (C) 2013-2015  Florent Hedin
  *  
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

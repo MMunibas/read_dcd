@@ -2,9 +2,9 @@
 ########################   MakeVars   ###########################
 #################################################################
 
-#CXX=g++
+CXX=g++
 
-CXX_OPT= -std=c++0x -I "./include" -Wall -Wextra -O2
+CXX_OPT= -std=c++11 -I "./include" -Wall -Wextra -O2
 
 LD_LIB=
 
@@ -36,3 +36,6 @@ $(TARGET):$(OBJ)
 
 clean:
 	rm -f $(TARGET) ./obj/*.o
+	
+RLIB:
+	make -C R_interface

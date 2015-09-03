@@ -16,44 +16,52 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef R_DCD_LIB
-
-#include <cstdlib>
-#include <iostream>
-
-#include "array_tools.hpp"
+#ifdef R_DCD_LIB
 
 #include "dcd_r.hpp"
 
-using namespace std;
+#include <R.h>
+#include <Rinternals.h>
+// #include <Rdefines.h>
 
-int main(int argc, char* argv[])
-{                
-    // instance of a new object DCD_R attached to a dcd file 
-    DCD_R dcdf("dyna.dcd");
-    
-    // read the header and print it
-    dcdf.read_header();
-    dcdf.printHeader();
-    
-    const float *x,*y,*z;
-    
-    // in this loop the coordinates are read frame by frame
-    for(int i=0;i<dcdf.getNFILE();i++)
-    {
-        dcdf.read_oneFrame();
-        
-        /* your code goes here */
-        
-        x=dcdf.getX();
-        y=dcdf.getY();
-        z=dcdf.getZ();
-        
-        /* ... */
-        
-    }
-    
-    return EXIT_SUCCESS;
+static DCD_R* dcdf = nullptr;
+
+extern "C"
+{
+
+  SEXP R_open_dcd(SEXP dcdname)
+  {
+
+    int n = length(dcdname);
+    const char* name = CHAR(STRING_ELT(dcdname, 0));
+    dcdf = new DCD_R(s);
+   
+    return R_NilValue;
+   
+  }
+  
+  SEXP R_read_header()
+  {
+    return R_NilValue;
+  }
+  
+  SEXP R_print_header()
+  {
+    return R_NilValue;
+  }
+  
+  SEXP R_read_oneFrame()
+  {
+    return R_NilValue;
+  }
+  
+  SEXP R_close_dcd()
+  {
+    delete dcdf;
+    return R_NilValue;
+  }
+  
 }
 
 #endif
+
