@@ -73,32 +73,37 @@ int main(int argc, char* argv[])
     float *pbx;
     pbx = new float[size];
     
-    // in this loop the coordinates are read frame by frame
-    for(int i=0;i<size;i++)
+    try{
+      // in this loop the coordinates are read frame by frame
+      for(int i=0;i<size;i++)
+      {
+          dcdf.read_oneFrame();
+
+          x=dcdf.getX();
+          y=dcdf.getY();
+          z=dcdf.getZ();
+          
+          pbc = dcdf.getPbc();
+          
+          x1[i] = x[id1];
+          y1[i] = y[id1];
+          z1[i] = z[id1];
+          
+          x2[i] = x[id2];
+          y2[i] = y[id2];
+          z2[i] = z[id2];
+
+          pbx[i] = (float) pbc[0];
+      }
+    }
+    catch(std::ios_base::failure f)
     {
-        dcdf.read_oneFrame();
-
-        x=dcdf.getX();
-        y=dcdf.getY();
-        z=dcdf.getZ();
-        
-        pbc = dcdf.getPbc();
-        
-        x1[i] = x[id1];
-        y1[i] = y[id1];
-        z1[i] = z[id1];
-        
-        x2[i] = x[id2];
-        y2[i] = y[id2];
-        z2[i] = z[id2];
-
-        pbx[i] = (float) pbc[0];
+      cerr << "Error when reading from dcd ; most probably the dcd ended prematurely" << endl;
+      cerr << f.what() << endl;
+      cerr << "continuing..." << endl;
     }
 
     uint steps   = dcdf.getNFILE()/8;
-//     uint remains = dcdf.getNFILE()%8;
-
-//     cout << "complete steps and remaining : " << steps << '\t' << remains << endl;
     
     float *dist = new float[size];
     
