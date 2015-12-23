@@ -4,7 +4,7 @@
 
 #CXX=g++
 
-CXX_OPT= -std=c++0x -I "./include" -Wall -Wextra -O2
+CXX_OPT= -std=c++11 -I "./include" -I "./vectorclass-1.17" -fabi-version=6 -Wabi -Wall -Wextra -O2 -mavx
 
 LD_LIB=
 
