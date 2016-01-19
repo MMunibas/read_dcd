@@ -65,8 +65,13 @@ int main(int argc, char* argv[])
     y2 = new float[size];
     z2 = new float[size];
     
+    //deoxy indexes
     const uint id1 = 4368;
     const uint id2 = 8751;
+    
+    //oxy indexes
+//     const uint id1 = 2146;
+//     const uint id2 = 6529;
     
     // pbc[0] pbc[2] pbc[5] contain the x y z box size
     const double *pbc;
