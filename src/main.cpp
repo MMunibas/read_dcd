@@ -78,6 +78,8 @@ int main(int argc, char* argv[])
     float *pbx;
     pbx = new float[size];
     
+    float progress = 0.0;
+    
     try{
       // in this loop the coordinates are read frame by frame
       for(int i=0;i<size;i++)
@@ -99,6 +101,13 @@ int main(int argc, char* argv[])
           z2[i] = z[id2];
 
           pbx[i] = (float) pbc[0];
+          
+          if(i%10==0)
+          {
+            progress = 100.f * (float)i / (float)size;
+            printf(stdout,"Progress (dcd read): %6.2lf %%\r",progress);
+            fflush(stdout);
+          }
       }
     }
     catch(std::ios_base::failure f)
