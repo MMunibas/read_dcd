@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
           if(i%10==0)
           {
             progress = 100.f * (float)i / (float)size;
-            printf(stdout,"Progress (dcd read): %6.2lf %%\r",progress);
+            fprintf(stdout,"Progress (dcd read): %6.2lf %%\r",progress);
             fflush(stdout);
           }
       }
