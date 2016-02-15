@@ -207,6 +207,11 @@ void DCD_R::printHeader() const
     
 }
 
+size_t DCD_R::getPos()
+{
+  return dcdf.tellg();
+}
+
 DCD_R::~DCD_R()
 {
     dcdf.close();

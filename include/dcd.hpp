@@ -60,6 +60,7 @@ protected:
     
     //protected methods
     virtual void alloc()=0;
+    
     void checkFortranIOerror(const char file[], const int line, 
                              const unsigned int fortcheck1, const unsigned int fortcheck2) const;
 public:
@@ -85,6 +86,9 @@ public:
     int getNTITLE() const;
     const int* getICNTRL() const;
     const char* getHDR() const;
+    
+    // return file position in bytes
+    virtual size_t getPos()=0;
     
     virtual ~DCD();
 };

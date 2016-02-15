@@ -39,6 +39,8 @@ public:
     void read_oneFrame();
     void printHeader() const;
         
+    virtual size_t getPos();
+    
     ~DCD_R();
 
 };

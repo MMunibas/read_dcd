@@ -20,12 +20,14 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 #include "array_tools.hpp"
 #include "dcd_r.hpp"
 #include "vectorclass.h"
 
 using namespace std;
+using namespace chrono;
 
 Vec8f rint(const Vec8f& x)
 {
@@ -78,9 +80,20 @@ int main(int argc, char* argv[])
     float *pbx;
     pbx = new float[size];
     
-    float progress = 0.0;
+    // for measuring progress and speed of file read, and remaining time
+    float progress;
+    float speed;
+    float remaining;
+    size_t posi, pose;
+    time_point<high_resolution_clock> /*begin,*/clocki,clocke;
+    const int checkInterval = 0.02*size;
     
     try{
+      
+      posi = dcdf.getPos();
+      clocki = high_resolution_clock::now();
+//       clocki = begin;
+      
       // in this loop the coordinates are read frame by frame
       for(int i=0;i<size;i++)
       {
@@ -102,10 +115,23 @@ int main(int argc, char* argv[])
 
           pbx[i] = (float) pbc[0];
           
-          if(i%10==0)
+          if(i%checkInterval==0)
           {
+            pose = dcdf.getPos();
+            clocke = high_resolution_clock::now();
+            duration<float> dur = clocke-clocki;
+//             duration<float> elapsed = clocke-begin;
+            
             progress = 100.f * (float)i / (float)size;
-            fprintf(stdout,"Progress (dcd read): %6.2lf %%\r",progress);
+            speed = (float)(pose-posi)/(float)1e6;
+            speed /= dur.count();
+            
+            remaining = (100.f - progress)*dur.count();
+            
+            posi=pose;
+            clocki=clocke;
+            
+            fprintf(stdout,"Progress (dcd read): %.2lf %% \t speed (MB/s): %.2lf \t Time remaining (s) : %.1lf \r",progress,speed,remaining);
             fflush(stdout);
           }
       }
